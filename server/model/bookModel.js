@@ -16,6 +16,7 @@ const bookSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
+    default:0,
     required: [true, "Please enter rating of book"],
   },
   genre: {
@@ -24,11 +25,30 @@ const bookSchema = new mongoose.Schema({
   },
   reviews_number: {
     type: Number,
+    default:0,
     required: [true, "Please enter review number of book"],
   },
+  // reviews:[
+  //   {
+  //     name:{
+  //       type: String,
+  //       required:[true,"Enter name of reviwer"],
+
+  //     },
+  //     rating:{
+  //       type: Number,
+  //       required:true,
+  //     },
+  //     comment:{
+  //       type:String,
+  //       required:true,
+  //     }
+  //   }
+  // ],
   date_published: {
     type: Date,
-    required: [true, "Please ente date published of book"],
+    default: Date.now,
+    required: [true, "Please enter date published of book"],
   },
   cover: [
     {
