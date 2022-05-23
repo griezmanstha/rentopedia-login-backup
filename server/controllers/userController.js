@@ -16,9 +16,7 @@ exports.createUser = async (req, res, next) => {
 
 //Get User
 exports.getAllUsers = async (req, res) => {
-  const apiFeature = new ApiFeatures(User.find(), req.query)
-  .search()
-  .filter();
+  const apiFeature = new ApiFeatures(User.find(), req.query).search().filter();
   const users = await apiFeature.query;
 
   res.status(201).json({
@@ -94,20 +92,19 @@ exports.deleteUser = async (req, res) => {
 };
 
 //Login User
-exports.loginUser = async(req,res,next)=>{
+exports.loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
 
-  const {email,password}= req.body;
-
-  if (!email|| !password){
+  if (!email || !password) {
     return res.status(400).json({
       success: false,
       message: "Please Enter Email or Password",
     });
   }
 
-  const user = await User.findOne({email}).select("+password");
+  const user = await User.findOne({ email }).select("+password");
 
-  if (!user){
+  if (!user) {
     return res.status(401).json({
       success: false,
       message: "Invalid Email or Password",
@@ -116,7 +113,7 @@ exports.loginUser = async(req,res,next)=>{
 
   const isPasswordMatched = await user.comparePassword(password);
 
-  if (!isPasswordMatched){
+  if (!isPasswordMatched) {
     return res.status(401).json({
       success: false,
       message: "Invalid Email or Password",
@@ -130,18 +127,17 @@ exports.loginUser = async(req,res,next)=>{
     message: "User logged in successfully",
     token,
   });
-
-}
+};
 
 //LogOut
-exports.logout = async(req,res,next)=>{
-  res.cookie("token",null,{
+exports.logout = async (req, res, next) => {
+  res.cookie("token", null, {
     expires: new Date(Date.now()),
-    httpOnly:true,
-  })
+    httpOnly: true,
+  });
   res.status(200).json({
     success: true,
     message: "Logged Out",
     token,
   });
-}
+};
