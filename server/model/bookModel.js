@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 const bookSchema = new mongoose.Schema({
-  bookname: {
+  name: {
     type: String,
     required: [true, "Please enter the bookname"],
   },
@@ -16,16 +16,28 @@ const bookSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    default:0,
+    default: 0,
     required: [true, "Please enter rating of book"],
   },
-  genre: {
+  images: [
+    {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  category: {
     type: String,
     required: [true, "Please enter genre of book"],
   },
-  reviews_number: {
+  numofReviews: {
     type: Number,
-    default:0,
+    default: 0,
     required: [true, "Please enter review number of book"],
   },
   // reviews:[
@@ -50,18 +62,6 @@ const bookSchema = new mongoose.Schema({
     default: Date.now,
     required: [true, "Please enter date published of book"],
   },
-  cover: [
-    {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
 });
 
 //JWT
