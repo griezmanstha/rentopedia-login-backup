@@ -72,7 +72,7 @@ exports.deleteUser = async (req, res) => {
   let user = User.findById(req.params.id);
 
   if (!user) {
-    return res.status(500).json({
+    return res.status(404).json({
       success: false,
       message: "User not found",
     });
