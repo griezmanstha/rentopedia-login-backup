@@ -45,7 +45,7 @@ exports.getBookDetails = async (req, res, next) => {
 
 //Update Book
 exports.updateBook = async (req, res) => {
-  const book = Book.findById(req.params.id);
+  let book = Book.findById(req.params.id);
 
   if (!book) {
     return res.status(500).json({
@@ -68,21 +68,17 @@ exports.updateBook = async (req, res) => {
 };
 
 //Book delete
-exports.deleteBook = async (req, res) => {
-  let book = Book.findById(req.params.id);
+exports.deleteBook = async (req, res,next) => {
+  const book = await Book.findById(req.params.id);
 
   if (!book) {
-    return res.status(500).json({
+    return res.status(404).json({
       success: false,
       message: "Book not found",
     });
   }
 
-  book = await Book.findByIdAndRemove(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-    useFindandModify: false,
-  });
+  await book.remove()
 
   res.status(200).json({
     success: true,

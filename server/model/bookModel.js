@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 const bookSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: [true, "Please enter the bookname"],
   },
@@ -31,7 +31,7 @@ const bookSchema = new mongoose.Schema({
       },
     },
   ],
-  category: {
+  genre: {
     type: String,
     required: [true, "Please enter genre of book"],
   },
@@ -59,7 +59,6 @@ const bookSchema = new mongoose.Schema({
   // ],
   date_published: {
     type: Date,
-    default: Date.now,
     required: [true, "Please enter date published of book"],
   },
 });
@@ -71,7 +70,6 @@ bookSchema.methods.getJWTToken = function () {
   });
 };
 
-//Compare Password
 
 const book = mongoose.model("Book", bookSchema);
 
